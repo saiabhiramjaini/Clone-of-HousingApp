@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function UserNavbar() {
-    const [notifications, setNotifications] = useState([]); // Initialize with an empty array
-
+    const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
 
     useEffect(() => {
@@ -11,6 +10,7 @@ function UserNavbar() {
             try {
                 const response = await axios.get("http://localhost:5001/notifications/getNotifications");
                 setNotifications(response.data.notifications);
+                console.log(response.data.notifications)
             } catch (e) {
                 console.log(e);
             }
@@ -35,14 +35,19 @@ function UserNavbar() {
         <>
             <button onClick={toggleNotifications}>Notifications</button>
             {showNotifications && (
-                <div>
-                    <h3>Notifications</h3>
+                <div className="notification-container">
+                    <h2>Notifications</h2>
                     <ul>
                         {notifications.map((notification, index) => (
-                            <li key={index}>{notification.notification}</li>
+                            <li key={index}>
+                                <div>
+                                    <p>Notification: {notification.notification}</p>
+                                    <p>Status: {notification.status.toString()}</p>
+                                </div>
+                            </li>
                         ))}
                     </ul>
-                    <button onClick={handleMarkAsRead}>Mark all as read</button>
+                    <button onClick={handleMarkAsRead}>Mark as read</button>
                 </div>
             )}
         </>
