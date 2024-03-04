@@ -7,7 +7,6 @@ function AdminDashboard() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
 
-
     axios.defaults.withCredentials = true;
     useEffect(() => {
         const fetchData = async () => {
@@ -17,7 +16,6 @@ function AdminDashboard() {
                 setUsername(response.data.username);
             } catch (error) {
                 console.error('Error fetching profile data:', error);
-                // Check if the error response is 401 (Unauthorized)
                 if (error.response && error.response.status === 401) {
                     setError('Unauthorized access or token expired. Please login again.');
                 } else {
@@ -40,23 +38,25 @@ function AdminDashboard() {
     };
 
     return (
-        <>
-            <h1>Welcome to Dashboard</h1>
-            {error === "Unauthorized access or token expired. Please login again." ? (
-                <p>{error}</p>
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Welcome to Dashboard</h1>
+            {error ? (
+                <p className="text-red-500">{error}</p>
             ) : (
                 <>
-                    {/* Render profile data here */}
-                    <p>{email}</p>
-                    <p>{username}</p>
-                    <button onClick={handleLogout}>Logout</button>
+                    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <p className="text-gray-700 text-base mb-4">Email: {email}</p>
+                        <p className="text-gray-700 text-base mb-6">Username: {username}</p>
+                        <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Logout
+                        </button>
+                    </div>
                     <br />
-                    <a href="/admin/uploadProperty">upload Property</a>
+                    <a href="/admin/uploadProperty" className="text-blue-500 hover:text-blue-800">Upload Property</a>
                 </>
             )}
-        </>
+        </div>
     );
-    
 }
 
 export default AdminDashboard;

@@ -7,7 +7,6 @@ function UserDashboard() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
 
-
     axios.defaults.withCredentials = true;
     useEffect(() => {
         const fetchData = async () => {
@@ -40,21 +39,24 @@ function UserDashboard() {
     };
 
     return (
-        <>
-            <h1>Welcome to Dashboard</h1>
-            {error === "Unauthorized access or token expired. Please login again." ? (
-                <p>{error}</p>
+        <div className="max-w-xl mx-auto py-8 px-4">
+            <h1 className="text-2xl font-semibold text-center mb-6">Welcome to Dashboard</h1>
+            {error ? (
+                <p className="text-red-500 text-center">{error}</p>
             ) : (
                 <>
                     {/* Render profile data here */}
-                    <p>{email}</p>
-                    <p>{username}</p>
-                    <button onClick={handleLogout}>Logout</button>
+                    <div className="bg-white shadow-md rounded-lg p-4 mb-6">
+                        <p className="text-lg"><strong>Email:</strong> {email}</p>
+                        <p className="text-lg"><strong>Username:</strong> {username}</p>
+                    </div>
+                    <div className="text-center">
+                        <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Logout</button>
+                    </div>
                 </>
             )}
-        </>
+        </div>
     );
-    
 }
 
 export default UserDashboard;
