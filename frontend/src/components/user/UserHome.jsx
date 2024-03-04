@@ -34,15 +34,15 @@ function UserHome() {
                   <img src={property.image} alt="Property" className="w-full h-48 object-cover" />
                   <div className="px-4 py-4 sm:px-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">{property.title}</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">{property.description}</p>
+                    {/* <p className="mt-1 max-w-2xl text-sm text-gray-500">{property.description}</p> */}
                     <ul className="mt-2 grid grid-cols-1 gap-2">
                       <li className="text-sm text-gray-600">Location: {property.location}</li>
-                      <li className="text-sm text-gray-600">City: {property.city}</li>
+                      {/* <li className="text-sm text-gray-600">City: {property.city}</li>
                       <li className="text-sm text-gray-600">State: {property.state}</li>
-                      <li className="text-sm text-gray-600">Price: ₹{property.price}</li>
+                      <li className="text-sm text-gray-600">Price: ₹{property.price}</li> */}
                       <li className="text-sm text-gray-600">Dimensions: {property.dimensions}</li>
-                      <li className="text-sm text-gray-600">Realtor Email: {property.realtorEmail}</li>
-                      <li className="text-sm text-gray-600">Realtor Mobile: {property.realtorMobile}</li>
+                      {/* <li className="text-sm text-gray-600">Realtor Email: {property.realtorEmail}</li>
+                      <li className="text-sm text-gray-600">Realtor Mobile: {property.realtorMobile}</li> */}
                     </ul>
                   </div>
                 </div>

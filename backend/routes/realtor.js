@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { signUpSchema, signInSchema, forgotPasswordSchema, resetPasswordSchema } = require('../utils/zodSchema');
 
 const Realtor = require("../models/realtorModel");
-const authMiddleware = require("../middleware/authMiddleware");
+const realtorMiddleware = require("../middleware/realtorMiddleware");
 const sendEmail = require("../utils/sendEmail");
 
 // Sign Up Route
@@ -19,7 +19,7 @@ router.post("/signup",async (req, res) => {
             return res.json({ msg: "Passwords do not match" });
         }
 
-        // Check if user already exists
+        // Check if realtor already exists
         const existingUser = await Realtor.findOne({ email });
         if (existingUser) {
             return res.json({ msg: "Realtor already exists" });
@@ -28,7 +28,7 @@ router.post("/signup",async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create the user
+        // Create the realtor
         const createdUser = await Realtor.create({
             username,
             email,
@@ -57,7 +57,7 @@ router.post("/signin", async (req, res) => {
             return res.json({ msg: "Please enter all fields" });
         }
 
-        // Find user by email
+        // Find realtor by email
         const existingUser = await Realtor.findOne({ email });
         if (!existingUser) {
             return res.json({ msg: "Realtor-Email already registered" });
@@ -91,7 +91,7 @@ router.post("/forgot-password", async (req, res) => {
             return res.json({ msg: "Please enter your registered email" });
         }
 
-        // Find user by email
+        // Find realtor by email
         const existingUser = await Realtor.findOne({ email });
         if (!existingUser) {
             return res.json({ msg: "Realtor not found" });
@@ -138,19 +138,19 @@ router.post("/reset-password/:token", async (req, res) => {
 });
 
 // Profile Route (Protected)
-router.get('/profile', authMiddleware, async (req, res) => {
+router.get('/profile', realtorMiddleware, async (req, res) => {
     try {
-        // Get user information from middleware
-        const user = req.user;
-        const userProfile = await Realtor.findOne({ email: user.email });
+        // Get realtor information from middleware
+        const realtor = req.realtor;
+        const userProfile = await Realtor.findOne({ email: realtor.email });
 
-        // Return user profile
+        // Return realtor profile
         return res.json({
             username: userProfile.username,
             email: userProfile.email,
         });
     } catch (error) {
-        console.error('Error fetching user profile:', error);
+        console.error('Error fetching realtor profile:', error);
         res.status(500).json({ msg: 'Server error' });
     }
 });

@@ -5,15 +5,15 @@ const cloudinary = require("../utils/cloudinary");
 const Properties = require("../models/propertyModel");
 const Realtor = require("../models/realtorModel");
 const User = require("../models/userModel")
-const authMiddleware = require("../middleware/authMiddleware");
+const realtorMiddleware = require("../middleware/realtorMiddleware");
 
-router.post("/uploadProperty", authMiddleware, async (req, res) => {
+router.post("/uploadProperty", realtorMiddleware, async (req, res) => {
   const { image, title, description, location, city, state, price, dimensions, realtorMobile, realtorEmail } = req.body;
 
   try {
     if (image) {
       const uploadRes = await cloudinary.uploader.upload(image);
-      const uploaderEmail = req.user.email;
+      const uploaderEmail = req.realtor.email;
       if (uploadRes) {
         const property = new Properties({
           image: uploadRes.url,
@@ -30,8 +30,7 @@ router.post("/uploadProperty", authMiddleware, async (req, res) => {
 
         await property.save();
 
-        const email = req.user.email;
-        const realtorDocs = await Realtor.findOne({ email: email });
+        const realtorDocs = await Realtor.findOne({ email: uploaderEmail });
         realtorDocs.properties.push(property);
         await realtorDocs.save();
 

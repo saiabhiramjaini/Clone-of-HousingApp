@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import UserNavbar from './UserNavbar';
 
 function UserPropertyOverview() {
   const [property, setProperty] = useState(null);
@@ -23,6 +24,8 @@ function UserPropertyOverview() {
   }
 
   return (
+    <>
+    <UserNavbar />
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <img src={property.image} alt="Property" className="w-full h-96 object-cover" />
@@ -41,6 +44,7 @@ function UserPropertyOverview() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

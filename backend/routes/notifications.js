@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middleware/authMiddleware");
+const userMiddleware = require("../middleware/userMiddleware");
 const User = require("../models/userModel");
 
-router.get("/getNotifications",  authMiddleware, async (req, res) => {
+router.get("/getNotifications",  userMiddleware, async (req, res) => {
     const user = req.user.email; 
     try {
         const userDoc = await User.findOne({ email: user });
@@ -20,7 +20,7 @@ router.get("/getNotifications",  authMiddleware, async (req, res) => {
 });
 
 
-router.post("/addNotifications",  authMiddleware, async (req, res) => {
+router.post("/addNotifications",  userMiddleware, async (req, res) => {
     const user = req.user.email;
     try {
         const { notification } = req.body;
@@ -38,7 +38,7 @@ router.post("/addNotifications",  authMiddleware, async (req, res) => {
     }
 });
 
-router.post("/markAllAsRead", authMiddleware,async (req, res) => {
+router.post("/markAllAsRead", userMiddleware,async (req, res) => {
     const user = req.user.email;
     try {
         const userDoc = await User.findOne({ email: user });

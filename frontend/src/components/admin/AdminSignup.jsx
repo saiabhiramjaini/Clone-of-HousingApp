@@ -16,7 +16,7 @@ function AdminSignup(){
         try{
             const response = await axios.post('http://localhost:5001/realtor/signup', {username, email, password, cPassword,})
             alert(response.data.msg);
-            if(response.data.msg === "User created Successfully"){
+            if(response.data.msg === "Realtor created Successfully"){
                 navigate('/admin/signin')
             }
         }catch(e){
@@ -28,7 +28,7 @@ function AdminSignup(){
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md">
                 <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
-                    <h1 className="block text-gray-900 text-lg font-bold mb-6">Admin Signup</h1>
+                    <h1 className="block text-gray-900 text-lg font-bold mb-6">Signup</h1>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                             Username
@@ -59,7 +59,7 @@ function AdminSignup(){
                     </div>
                     <div className="flex items-center justify-between">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                            AdminSignup
+                            Signup
                         </button>
                         <a href="/admin/signin" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                             Already have an account?

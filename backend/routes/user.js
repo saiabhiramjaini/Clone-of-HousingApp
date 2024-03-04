@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { userSignUpSchema, signInSchema, forgotPasswordSchema, resetPasswordSchema } = require('../utils/zodSchema');
 
 const User = require("../models/userModel");
-const authMiddleware = require("../middleware/authMiddleware");
+const userMiddleware = require("../middleware/userMiddleware");
 const sendEmail = require("../utils/sendEmail");
 
 // Sign Up Route
@@ -140,7 +140,7 @@ router.post("/reset-password/:token", async (req, res) => {
 });
 
 // Profile Route (Protected)
-router.get('/profile', authMiddleware, async (req, res) => {
+router.get('/profile', userMiddleware, async (req, res) => {
     try {
         // Get user information from middleware
         const user = req.user;

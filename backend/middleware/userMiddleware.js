@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
-const authMiddleware = async (req, res, next) => {
+const userMiddleware = async (req, res, next) => {
     try {
         // Get the token from the cookie
         const token = req.cookies.token;
@@ -31,4 +31,4 @@ const authMiddleware = async (req, res, next) => {
     }
 };
 
-module.exports = authMiddleware;
+module.exports = userMiddleware;
