@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { signUpSchema, signInSchema, forgotPasswordSchema, resetPasswordSchema } = require('../utils/zodSchema');
+const { userSignUpSchema, signInSchema, forgotPasswordSchema, resetPasswordSchema } = require('../utils/zodSchema');
 
 const User = require("../models/userModel");
 const authMiddleware = require("../middleware/authMiddleware");
@@ -12,7 +12,7 @@ const sendEmail = require("../utils/sendEmail");
 router.post("/signup",async (req, res) => {
     try {
         // Validate request body against the schema
-        const { username, email, password, cPassword } = signUpSchema.parse(req.body);
+        const { username, email, location, password, cPassword } = userSignUpSchema.parse(req.body);
 
         // Password match validation
         if (password !== cPassword) {
@@ -32,9 +32,11 @@ router.post("/signup",async (req, res) => {
         const createdUser = await User.create({
             username,
             email,
+            location,
             password: hashedPassword,
         });
 
+        console.log(createdUser)
         // Generate token
         const token = jwt.sign({ email: createdUser.email }, process.env.SECRET, { expiresIn: "1d" });
         res.cookie('token', token, { httpOnly: true });

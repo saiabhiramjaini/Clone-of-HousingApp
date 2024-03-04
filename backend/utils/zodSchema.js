@@ -1,5 +1,13 @@
 const { z } = require('zod');
 
+const userSignUpSchema = z.object({
+    username: z.string(),
+    email: z.string().email(),
+    location: z.string(),
+    password: z.string().min(8),
+    cPassword: z.string().min(8),
+});
+
 const signUpSchema = z.object({
     username: z.string(),
     email: z.string().email(),
@@ -22,6 +30,7 @@ const resetPasswordSchema = z.object({
 });
 
 module.exports = {
+    userSignUpSchema,
     signUpSchema,
     signInSchema,
     forgotPasswordSchema,

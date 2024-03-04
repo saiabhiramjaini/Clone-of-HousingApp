@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import UserNavbar from "./UserNavbar";
 
 function UserHome(){
     const [properties, setProperties] = useState([]);
@@ -19,6 +20,7 @@ function UserHome(){
 
     return(
         <>
+        <UserNavbar/>
         <h1>Properties</h1>
         <br /><br />
         <ul>

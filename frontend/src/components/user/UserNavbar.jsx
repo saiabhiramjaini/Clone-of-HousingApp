@@ -1,29 +1,52 @@
-import React, {useState} from 'react';
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function UserNavbar(){
-    const [query, setQuery] = useState("");
+function UserNavbar() {
+    const [notifications, setNotifications] = useState([]); // Initialize with an empty array
 
-    const navigate = useNavigate();
+    const [showNotifications, setShowNotifications] = useState(false);
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
-        try{
-            const response = await axios.post('http://localhost:5001/properties/search', {query})
-            
-        }catch(e){
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const response = await axios.get("http://localhost:5001/notifications/getNotifications");
+                setNotifications(response.data.notifications);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        fetchNotifications();
+    }, []);
+
+    const toggleNotifications = () => {
+        setShowNotifications(!showNotifications);
+    };
+
+    const handleMarkAsRead = async () => {
+        try {
+            const response = await axios.post("http://localhost:5001/notifications/markAllAsRead")
+            alert(response.data.msg);
+        } catch (e) {
             console.log(e);
-        }   
+        }
     }
 
-    return(
+    return (
         <>
-        <input type="text" onChange={(e)=>setQuery(e.target.value)}/>
-        <button onClick={handleSubmit}>Search</button>
-        <br />
+            <button onClick={toggleNotifications}>Notifications</button>
+            {showNotifications && (
+                <div>
+                    <h3>Notifications</h3>
+                    <ul>
+                        {notifications.map((notification, index) => (
+                            <li key={index}>{notification.notification}</li>
+                        ))}
+                    </ul>
+                    <button onClick={handleMarkAsRead}>Mark all as read</button>
+                </div>
+            )}
         </>
-    )
+    );
 }
 
 export default UserNavbar;

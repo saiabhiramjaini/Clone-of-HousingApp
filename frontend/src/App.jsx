@@ -8,6 +8,7 @@ import UserForgotPassword from "./components/user/UserForgotPassword"
 import UserResetPassword from './components/user/UserResetPassword'
 import UserDashBoard from './components/user/UserDashboard'
 import UserHome from './components/user/UserHome';
+import UserNavbar from './components/user/UserNavbar';
 
 import AdminSignup from "./components/admin/AdminSignup"
 import AdminSignin from "./components/admin/AdminSignin"
@@ -37,6 +38,8 @@ function App() {
         <Route path='/user/resetPassword/:token' element={<UserResetPassword/>}></Route>
         <Route path='/user/dashboard' element={<UserDashBoard/>}></Route>
         <Route path='/user/home' element={<UserHome/>}></Route>
+        <Route path='/user/navbar' element={<UserNavbar/>}></Route>
+
       </Routes>
     </BrowserRouter>
   )

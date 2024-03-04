@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 function UserSignup(){
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
+    const [location, setLocation] = useState("");
     const [password, setPassword] = useState("");
     const [cPassword, setCpassword] = useState("");
+
 
     const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ function UserSignup(){
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try{
-            const response = await axios.post('http://localhost:5001/user/signup', {username, email, password, cPassword,})
+            const response = await axios.post('http://localhost:5001/user/signup', {username, email, location, password, cPassword,})
             alert(response.data.msg);
             if(response.data.msg == "User created Successfully"){
                 navigate('/user/signin')
@@ -35,9 +37,14 @@ function UserSignup(){
         <br />
         <input type="email" onChange={(e)=>setEmail(e.target.value)}/>
         <br /><br />
+        <label> Locality </label>
+        <br />
+        <input type="text" onChange={(e)=>setLocation(e.target.value)}/>
+        <br /> <br />
         <label> Password </label>
         <br />
         <input type="password" onChange={(e)=>setPassword(e.target.value)}/>
+        
         <br /><br />
         <label> Confirm Password </label>
         <br />
