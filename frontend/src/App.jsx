@@ -9,6 +9,7 @@ import UserResetPassword from './components/user/UserResetPassword'
 import UserDashBoard from './components/user/UserDashboard'
 import UserHome from './components/user/UserHome';
 import UserNavbar from './components/user/UserNavbar';
+import UserPropertyOverview from './components/user/UserPropertyOverview';
 
 import AdminSignup from "./components/admin/AdminSignup"
 import AdminSignin from "./components/admin/AdminSignin"
@@ -39,6 +40,7 @@ function App() {
         <Route path='/user/dashboard' element={<UserDashBoard/>}></Route>
         <Route path='/user/home' element={<UserHome/>}></Route>
         <Route path='/user/navbar' element={<UserNavbar/>}></Route>
+        <Route path='/user/propertyOverview/:propertyId' element={<UserPropertyOverview/>}></Route>
 
       </Routes>
     </BrowserRouter>

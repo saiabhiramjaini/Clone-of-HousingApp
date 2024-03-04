@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const User = require("../models/userModel");
 
 router.get("/getNotifications",  authMiddleware, async (req, res) => {
-    const user = req.user.email; // Assuming you're using a fixed user email for testing purposes
+    const user = req.user.email; 
     try {
         const userDoc = await User.findOne({ email: user });
         if (userDoc) {

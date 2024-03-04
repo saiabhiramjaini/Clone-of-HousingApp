@@ -41,6 +41,7 @@ router.post("/uploadProperty", authMiddleware, async (req, res) => {
           { $push: { notifications: {
             "notification": "A new property has been listed near you",
             "propertyId": property._id,
+            "timeStamp": new Date(),
             "status": false
           }, } }
         );
@@ -67,6 +68,20 @@ router.get("/getAllProperties", async (req, res) => {
         console.error("Error getting all properties:", error);
         res.status(500).json({ error: "Internal server error" });
     }
+});
+
+router.get("/getProperty/:propertyId", async (req, res) => {
+  try {
+    const propertyId = req.params.propertyId;
+    const property = await Properties.findById(propertyId);
+    if (!property) {
+      return res.json({ msg: "Property not found" });
+    }
+    res.json(property);
+  } catch (error) {
+    console.error("Error getting property:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 
