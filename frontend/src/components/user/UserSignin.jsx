@@ -15,7 +15,7 @@ function UserSignin(){
             const response = await axios.post('http://localhost:5001/user/signin', {email, password})
             alert(response.data.msg);
             if(response.data.msg == "Signin successful"){
-                navigate('/user/dashboard')
+                navigate('/user/home')
             }
         }catch(e){
             console.log(e);

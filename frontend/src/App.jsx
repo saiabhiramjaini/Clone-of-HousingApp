@@ -7,6 +7,7 @@ import UserSignin from "./components/user/UserSignin"
 import UserForgotPassword from "./components/user/UserForgotPassword"
 import UserResetPassword from './components/user/UserResetPassword'
 import UserDashBoard from './components/user/UserDashboard'
+import UserHome from './components/user/UserHome';
 
 import AdminSignup from "./components/admin/AdminSignup"
 import AdminSignin from "./components/admin/AdminSignin"
@@ -14,6 +15,7 @@ import AdminForgotPassword from "./components/admin/AdminForgotPassword"
 import AdminResetPassword from './components/admin/AdminResetPassword'
 import AdminDashBoard from './components/admin/AdminDashboard'
 import AdminUploadProperty from './components/admin/AdminUploadProperty';
+
 
 function App() {
   return (
@@ -34,7 +36,7 @@ function App() {
         <Route path='/user/forgotPassword' element={<UserForgotPassword/>}></Route>
         <Route path='/user/resetPassword/:token' element={<UserResetPassword/>}></Route>
         <Route path='/user/dashboard' element={<UserDashBoard/>}></Route>
-        
+        <Route path='/user/home' element={<UserHome/>}></Route>
       </Routes>
     </BrowserRouter>
   )
