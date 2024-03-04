@@ -4,9 +4,10 @@ const router = express.Router();
 const cloudinary = require("../utils/cloudinary");
 const Properties = require("../models/propertyModel");
 const Realtor = require("../models/realtorModel");
+const User = require("../models/userModel")
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.post("/uploadProperty", authMiddleware,async (req, res) => {
+router.post("/uploadProperty", authMiddleware, async (req, res) => {
   const { image, title, description, location, city, state, price, dimensions, realtorMobile, realtorEmail } = req.body;
 
   try {
@@ -30,25 +31,30 @@ router.post("/uploadProperty", authMiddleware,async (req, res) => {
         await property.save();
 
         const email = req.user.email;
-        const realtorDocs = await Realtor.findOne({email: email});
-
-        if(!realtorDocs.properties){
-          realtorDocs.properties = [{}]
-        }
-        const propertyId = await Properties.findOne({description});
-        realtorDocs.properties.push(propertyId);
+        const realtorDocs = await Realtor.findOne({ email: email });
+        realtorDocs.properties.push(property);
         await realtorDocs.save();
+
+        // Update the notifications array for all users with the same location
+        await User.updateMany(
+          { location },
+          { $push: { notifications: {
+            "notification": "A new property has been listed near you",
+            "propertyId": property._id,
+            "status": false
+          }, } }
+        );
 
         res.status(200).json({ msg: "Property uploaded successfully" });
       } else {
         res.json({ msg: "Error uploading image" });
       }
     } else {
-      res.json({  msg: "Image data is required" });
+      res.json({ msg: "Image data is required" });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({  msg: "Internal Server Error" });
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 });
   

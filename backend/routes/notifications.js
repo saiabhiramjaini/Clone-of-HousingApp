@@ -20,7 +20,7 @@ router.get("/getNotifications",  authMiddleware, async (req, res) => {
 });
 
 
-router.post("/addNotifications",  authMiddleware,async (req, res) => {
+router.post("/addNotifications",  authMiddleware, async (req, res) => {
     const user = req.user.email;
     try {
         const { notification } = req.body;
